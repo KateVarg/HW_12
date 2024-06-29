@@ -19,9 +19,22 @@ def browser_setting():
     browser.config.window_height = 1800
     browser.config.window_width = 1200
 
+
+def pytest_addoption(parser):
+    parser.addoption(
+        '--browser',
+        help='Браузер, в котором запущены тесты',
+        choices=['chrome', 'firefox'],
+        default='chrome'
+    )
+
+
+@pytest.fixture(scope="function", autouse=True)
+def setup_browser(request):
+    browser_name = request.config.getoption('--browser')
     options = Options()
     selenoid_capabilities = {
-        "browserName": "chrome",
+        "browserName": browser_name,
         "browserVersion": "100.0",
         "selenoid:options": {
             "enableVNC": True,
