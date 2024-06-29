@@ -13,13 +13,6 @@ def load_env():
     load_dotenv()
 
 
-@pytest.fixture(scope="function", autouse=True)
-def browser_setting():
-    browser.config.base_url = "https://demoqa.com"
-    browser.config.window_height = 1800
-    browser.config.window_width = 1200
-
-
 def pytest_addoption(parser):
     parser.addoption(
         '--browser_version',
@@ -51,6 +44,10 @@ def setup_browser(request):
         options=options)
 
     browser.config.driver = driver
+
+    browser.config.base_url = "https://demoqa.com"
+    browser.config.window_height = 1800
+    browser.config.window_width = 1200
 
     yield browser
 

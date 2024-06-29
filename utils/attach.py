@@ -1,8 +1,9 @@
 import os
 import allure
 from allure_commons.types import AttachmentType
+from dotenv import load_dotenv
 
-
+load_dotenv()
 selenoid_url = os.getenv("SELENOID_URL")
 
 
