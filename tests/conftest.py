@@ -22,20 +22,19 @@ def browser_setting():
 
 def pytest_addoption(parser):
     parser.addoption(
-        '--browser',
-        help='Браузер, в котором запущены тесты',
-        choices=['chrome', 'firefox'],
-        default='chrome'
+        '--browser_version',
+        help='Версия браузера, в котором запущены тесты',
+        default='99'
     )
 
 
 @pytest.fixture(scope="function", autouse=True)
 def setup_browser(request):
-    browser_name = request.config.getoption('--browser')
+    browser_version = request.config.getoption('--browser_version')
     options = Options()
     selenoid_capabilities = {
-        "browserName": browser_name,
-        "browserVersion": "100.0",
+        "browserName": "chrome",
+        "browserVersion": browser_version,
         "selenoid:options": {
             "enableVNC": True,
             "enableVideo": True
@@ -61,4 +60,3 @@ def setup_browser(request):
     attach.add_video(browser)
 
     browser.quit()
-
